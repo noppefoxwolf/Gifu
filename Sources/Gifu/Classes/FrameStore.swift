@@ -170,7 +170,11 @@ private extension FrameStore {
       default: scaledImage = size != .zero ? image.resized(to: size) : nil
       }
     } else {
-      scaledImage = image
+      if #available(iOS 15.0, *) {
+        scaledImage = image.preparingForDisplay()
+      } else {
+        scaledImage = image
+      }
     }
 
     return scaledImage
